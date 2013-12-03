@@ -15,7 +15,7 @@ rl.question('String to translate: ', function (str) {
     , ret = ''
     ;
   
-  str = str.toLowerCase().split('').map(function (c) { return c.charCodeAt(0); });
+  str = str.split('').map(function (c) { return c.charCodeAt(0); });
   
   // - initialize cell 0 to 97
   tmp = [];
@@ -31,18 +31,15 @@ rl.question('String to translate: ', function (str) {
   bf.push('> +++++++');
   
   str.forEach(function (c) {
-    var inc = [];
-    inc.push('');
+    var inc = []
+      , op = (c > last) ? '+' : '-'
+      ;
     
-    if (c > last) {
-      _times(c - last, function () {
-        inc.push('+');
-      });
-    } else {
-      _times(last - c, function () {
-        inc.push('-');
-      });
-    }
+    inc.push(' ');
+    
+    _times(Math.abs(c - last), function () {
+      inc.push(op);
+    });
     
     last = c;
     
@@ -58,7 +55,7 @@ rl.question('String to translate: ', function (str) {
 });
 
 
-function _times (count, fn) {
+function _times(count, fn) {
   for (var i = 0; i < count; i++) {
     fn();
   }
